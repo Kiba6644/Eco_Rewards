@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Eco Rewards</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+    
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background-color: #f7faf7; 
+      color: #333;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #168a45;
+      padding: 0 32px;
+      height: 76px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100; 
+    }
+    .logo-title {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    @keyframes logoPulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+      100% { transform: scale(1); }
+    }
+    .logo-title img {
+      height: 44px;
+      width: 44px;
+      object-fit: contain;
+      animation: logoPulse 4s infinite ease-in-out;
+    }
+    .logo-title .title {
+      font-size: 1.6em;
+      color: #fff;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+    .nav-btns {
+      display: flex;
+      align-items: center; 
+      gap: 10px;
+    }
+    
+
+    .nav-btn {
+      background: none;
+      border: none;
+      padding: 9px 22px;
+      font-size: 1em;
+      font-weight: 500;
+      cursor: pointer;
+      color: #fff; 
+      transition: background 0.2s, color 0.2s;
+      border-radius: 20px; 
+      text-decoration: none;
+      display: inline-block;
+    }
+    .nav-btn:hover, .nav-btn:focus {
+      background: rgba(255, 255, 255, 0.15); 
+    }
+    
+    .auth-button { 
+      border-radius: 20px;
+      padding: 9px 22px;
+      font-size: 1em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+      border: 2px solid;
+      text-decoration: none; 
+    }
+    .login-btn { 
+      background: transparent;
+      color: #fff;
+      border-color: #fff;
+    }
+    .login-btn:hover, .login-btn:focus {
+      background: #fff;
+      color: #168a45;
+      border-color: #fff;
+    }
+    .logout-btn { 
+      background: #fff;
+      color: #168a45; 
+      border-color: #fff;
+    }
+    .logout-btn:hover {
+      background: #eaffea;
+      color: #11642f;
+      border-color: #eaffea;
+    }
+
+    .auth-wrapper {
+      display: flex;
+      gap: 10px; 
+    }
+    
+
+    .dashboard-btn {
+      background: #fff;
+      color: #168a45; 
+      border-color: #fff;
+    }
+    .dashboard-btn:hover {
+      background: #eaffea;
+      color: #11642f;
+      border-color: #eaffea;
+    }
+
+
+    .main-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      padding: 60px 80px;
+      max-width: 1200px;
+      margin: 0 auto;
+      gap: 50px;
+    }
+    @media (max-width: 900px) {
+      .main-content {
+        flex-direction: column;
+        padding: 40px 20px;
+        gap: 30px;
+      }
+    }
+    .text-section {
+      flex: 1;
+      max-width: 500px;
+      text-align: left;
+    }
+    .tagline {
+      display: inline-flex;
+      align-items: center;
+      background: #e6ffe6;
+      color: #168a45;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 0.9em;
+      margin-bottom: 20px;
+    }
+    .tagline svg {
+      margin-right: 8px;
+      width: 16px;
+      height: 16px;
+    }
+    .heading {
+      font-size: 3.2em;
+      font-weight: bold;
+      color: #168a45;
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+    .description {
+      font-size: 1.1em;
+      line-height: 1.6;
+      color: #555;
+      margin-bottom: 30px;
+    }
+    .action-text {
+        font-size: 1.05em;
+        color: #444;
+        margin-bottom: 10px;
+        line-height: 1.5;
+    }
+    .action-text strong {
+        color: #168a45;
+    }
+    .stats-grid {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 40px;
+      gap: 20px;
+    }
+    .stat-item {
+      text-align: left;
+    }
+    .stat-number {
+      font-size: 2em;
+      font-weight: bold;
+      color: #168a45;
+    }
+    .stat-label {
+      font-size: 0.9em;
+      color: #777;
+    }
+    .image-section {
+      flex: 1;
+      min-width: 400px;
+      display: flex;
+      justify-content: center;
+    }
+    .main-image {
+      max-width: 100%;
+      height: auto;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    }
+
+
+    .about-us-section {
+      padding: 80px 80px 100px 80px;
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .about-us-section h2 {
+      font-size: 2.5em;
+      color: #168a45;
+      margin-bottom: 15px;
+      font-weight: bold;
+    }
+    .about-us-section .subtitle {
+      font-size: 1.2em;
+      color: #555;
+      max-width: 800px;
+      margin: 0 auto 60px auto;
+      line-height: 1.6;
+    }
+
+    .about-content-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 50px;
+      text-align: left;
+    }
+    @media (max-width: 900px) {
+      .about-content-wrapper {
+        flex-direction: column;
+        gap: 30px;
+      }
+    }
+
+    .about-image-container {
+      flex: 1;
+      min-width: 400px;
+      display: flex;
+      justify-content: center;
+    }
+    .about-image {
+      max-width: 100%;
+      height: auto;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    }
+
+    .about-text-content {
+      flex: 1;
+      max-width: 550px;
+    }
+    .about-text-content h3 {
+      font-size: 1.8em;
+      color: #168a45;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+    .about-text-content p {
+      font-size: 1.05em;
+      line-height: 1.7;
+      color: #444;
+      margin-bottom: 15px;
+    }
+    
+
+    .features-section {
+      background-color: #fff; 
+      padding: 80px 80px;
+      border-top: 1px solid #e0e0e0; 
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr); 
+      gap: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .feature-card {
+      background: #fff;
+      border: 1px solid #e9e9e9;
+      border-radius: 12px;
+      padding: 30px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+    }
+
+    .feature-icon {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: #e6ffe6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 25px auto;
+      color: #168a45;
+    }
+
+    .feature-icon svg {
+      width: 32px;
+      height: 32px;
+    }
+
+    .feature-card h3 {
+      font-size: 1.5em;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 15px;
+    }
+
+    .feature-card p {
+      font-size: 1em;
+      line-height: 1.6;
+      color: #555;
+      margin: 0;
+    }
+
+    @media (max-width: 1100px) {
+      .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .features-grid {
+        grid-template-columns: 1fr; 
+      }
+      .features-section {
+        padding: 60px 20px;
+      }
+    }
+
+    .contact-section {
+      padding: 80px 80px;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      gap: 60px;
+    }
+    
+    .contact-info {
+      flex: 1;
+      max-width: 450px;
+    }
+    
+    .contact-info h2 {
+      font-size: 2.5em;
+      color: #168a45;
+      font-weight: bold;
+      margin-top: 0;
+      margin-bottom: 15px;
+    }
+    
+    .contact-info .subtitle {
+      font-size: 1.1em;
+      line-height: 1.6;
+      color: #555;
+      margin-bottom: 40px;
+    }
+    
+    .contact-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 25px;
+      gap: 20px;
+    }
+    
+    .contact-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: #e6ffe6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #168a45;
+      flex-shrink: 0; 
+    }
+    
+    .contact-icon svg {
+      width: 24px;
+      height: 24px;
+    }
+    
+    .contact-details h3 {
+      margin: 0 0 5px 0;
+      font-size: 1.2em;
+      color: #333;
+    }
+    
+    .contact-details p {
+      margin: 0;
+      font-size: 1em;
+      color: #555;
+    }
+    
+    .contact-form {
+      flex: 1;
+      background: #fff;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #333;
+    }
+    
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 1em;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      box-sizing: border-box;
+    }
+    
+    .form-group textarea {
+      height: 120px;
+      resize: vertical;
+    }
+    
+    .submit-btn {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 8px;
+      background: #16b83b;
+      color: #fff;
+      font-size: 1.1em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    
+    .submit-btn:hover {
+      background: #168a45;
+    }
+    
+    @media (max-width: 900px) {
+      .contact-section {
+        flex-direction: column;
+        padding: 60px 20px;
+      }
+      .contact-info {
+        max-width: 100%;
+      }
+    }
+    
+    .footer {
+      background-color: #168a45;
+      color: #eaffea;
+      text-align: center;
+      padding: 30px 20px;
+    }
+    
+    .footer p {
+      margin: 0;
+      font-size: 0.95em;
+    }
+    
+  </style>
+</head>
+<body id="top"> <header class="header">
+    <div class="logo-title">
+      <img src="{{ url_for('static', filename='Logo.jpg') }}" alt="Eco Rewards Logo">
+      <span class="title">Eco Rewards</span>
+    </div>
+    <nav class="nav-btns">
+      <a href="#top" class="nav-btn">Home</a>
+      
+      <button class="nav-btn">Services</button>
+      <button class="nav-btn">Shop</button>
+      <button class="nav-btn">Bin Locations</button>
+      
+      <a href="#contact-section" class="nav-btn">Contact Us</a>
+    </nav>
+    
+    <div class="auth-wrapper">
+      <a href="dashboard.html" class="auth-button dashboard-btn" id="dashboard-button" style="display: none;">Dashboard</a>
+      
+      <button class="auth-button login-btn" id="auth-button" onclick="window.location.href='/login'">Login</button>
+    </div>
+    
+  </header>
+
+  <main class="main-content">
+    <div class="text-section">
+      <div class="tagline">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+          <path d="M5 3.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5Zm-2 4a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5Zm-2 4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3.5a.5.5 0 0 1-.5-.5ZM13 1c-.161 0-.484.57-.484 1H3.484S3 1.57 3 1H1.5a.5.5 0 0 0 0 1H2v13.5a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 .5-.5V2h.5a.5.5 0 0 0 0-1H13Zm-1 2.5v11H3V2.5h9Z"/>
+        </svg>
+        Building a Sustainable Future
+      </div>
+      <h2 class="heading">Turn Your Waste Into Rewards</h2>
+      <p class="description">Join our community-driven initiative to create a cleaner environment. Collect waste, earn rewards, and discover eco-friendly products made from recycled materials.</p>
+      
+      <p class="action-text"><strong>Get Started:</strong> Begin your journey towards a greener planet today!</p>
+      <p class="action-text"><strong>Learn More:</strong> Dive deeper into our mission and how we're making an impact.</p>
+
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-number">10K+</div>
+          <div class="stat-label">Active Users</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">500+</div>
+          <div class="stat-label">Bins Located</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">50T</div>
+          <div class="stat-label">Waste Recycled</div>
+        </div>
+      </div>
+    </div>
+    <div class="image-section">
+      <img src="{{ url_for('static', filename='home.jpg') }}" alt="Waste bags for recycling" class="main-image">
+    </div>
+  </main>
+
+  <section class="about-us-section">
+    <h2>About Us</h2>
+    <p class="subtitle">We're on a mission to transform waste management and create a sustainable future for generations to come</p>
+
+    <div class="about-content-wrapper">
+      <div class="about-image-container">
+        <img src="{{ url_for('static', filename='about us.jpg') }}" alt="People collecting waste in a forest" class="about-image">
+      </div>
+      <div class="about-text-content">
+        <h3>Who We Are</h3>
+        <p>EcoReward is a non-profit organization dedicated to revolutionizing waste management through community participation and innovation. Founded in 2020, we've grown from a small local initiative to a region-wide movement.</p>
+        <p>We believe that everyone has a role to play in protecting our environment. By making waste collection rewarding and accessible, we're building a culture where sustainability is second nature.</p>
+        <p>Our team of environmental experts, community organizers, and technology enthusiasts work tirelessly to ensure that your contributions make a real difference.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="features-section">
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+            <path d="M8 13A5 5 0 1 1 8 3a5 5 0 0 1 0 10zm0 1A6 6 0 1 0 8 2a6 6 0 0 0 0 12z"/>
+            <path d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/>
+            <path d="M9.5 8a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+          </svg>
+        </div>
+        <h3>Our Mission</h3>
+        <p>To create a sustainable ecosystem where waste becomes a valuable resource and communities benefit from environmental conservation.</p>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.12 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
+            <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+          </svg>
+        </div>
+        <h3>Our Vision</h3>
+        <p>A world where zero waste is the norm, and every individual is empowered to contribute to a cleaner planet.</p>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M9.669.864 8 0 6.331.864l-1.858.282-.842 1.68-1.337 1.32L2.6 6l-.306 1.854 1.337 1.32.842 1.68 1.858.282L8 13l1.669-.864 1.858-.282.842-1.68 1.337-1.32L13.4 6l.306-1.854-1.337-1.32-.842-1.68L9.669.864zm1.196 1.193.684 1.365 1.086 1.072L12.387 6l.248 1.506-1.086 1.072-.684 1.365-1.51.229L8 11.07l-1.618-.826-1.51-.229-.684-1.365-1.086-1.072L3.614 6l-.248-1.506 1.086-1.072.684-1.365 1.51-.229L8 1.93l1.618.826 1.51.229z"/>
+            <path d="M8 5a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm0 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+          </svg>
+        </div>
+        <h3>Our Impact</h3>
+        <p>50 tons of waste recycled monthly, 10,000+ active participants, and growing communities across multiple regions.</p>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+            <path fill-rule="evenodd" d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/>
+          </svg>
+        </div>
+        <h3>Our Community</h3>
+        <p>A diverse network of environmental enthusiasts, local businesses, and eco-warriors working together for change.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact-section" id="contact-section"> <div class="contact-info">
+      <h2>Get In Touch</h2>
+      <p class="subtitle">Have questions or want to partner with us? We'd love to hear from you. Fill out the form and we'll get back to you as soon as possible.</p>
+      
+      <div class="contact-item">
+        <div class="contact-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-1.239-.757zm3.436-.586L16 11.801V4.697l-5.803 3.558z"/>
+          </svg>
+        </div>
+        <div class="contact-details">
+          <h3>Email</h3>
+          <p>ecorewards@gmail.com</p>
+        </div>
+      </div>
+      
+      <div class="contact-item">
+        <div class="contact-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/>
+          </svg>
+        </div>
+        <div class="contact-details">
+          <h3>Phone</h3>
+          <p>+91 9916690345</p>
+        </div>
+      </div>
+      
+      <div class="contact-item">
+        <div class="contact-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+          </svg>
+        </div>
+        <div class="contact-details">
+          <h3>Address</h3>
+          <p>BMS College of Engineering</p>
+        </div>
+      </div>
+      
+    </div>
+    
+    <form class="contact-form" onsubmit="alert('Message sent! (Simulation)'); return false;">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" placeholder="Your name" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="your@email.com" required>
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone</label>
+        <input type="tel" id="phone" name="phone" placeholder="+91">
+      </div>
+      <div class="form-group">
+        <label for="message">Message</label>
+        <textarea id="message" name="message" placeholder="Tell us how we can help you..." required></textarea>
+      </div>
+      <button type="submit" class="submit-btn">Send Message</button>
+    </form>
+    
+  </section>
+  
+  <footer class="footer">
+    <p>&copy; 2025 Eco Rewards. All rights reserved.</p>
+  </footer>
+  
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const isLoggedIn = localStorage.getItem('isLoggedIn');
+      const authButton = document.getElementById('auth-button');
+      const dashboardButton = document.getElementById('dashboard-button');
+      
+      if (isLoggedIn === 'true') {
+        authButton.textContent = 'Logout';
+        authButton.classList.remove('login-btn');
+        authButton.classList.add('logout-btn');
+        authButton.onclick = function(e) {
+          e.preventDefault(); 
+          localStorage.removeItem('isLoggedIn');
+          window.location.reload();
+        };
+        
+        dashboardButton.style.display = 'inline-block';
+        
+      } else {
+        authButton.textContent = 'Login';
+        authButton.classList.remove('logout-btn');
+        authButton.classList.add('login-btn');
+        authButton.onclick = function() {
+          window.location.href='/login';
+        };
+        
+
+        dashboardButton.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>

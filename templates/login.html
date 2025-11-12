@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Eco Rewards - Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    html {
+      scroll-behavior: smooth;
+      height: 100%;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      margin: 0;
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
+    
+
+    .login-main-area {
+      position: relative;
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px; 
+      box-sizing: border-box; 
+      overflow: hidden; 
+    }
+
+
+    .bg {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: url("{{ url_for('static', filename='background.jpg') }}") center/cover no-repeat;
+      z-index: 1;
+      filter: brightness(0.85) blur(1.5px);
+    }
+
+    .overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(30, 60, 20, 0.10);
+      z-index: 2;
+    }
+    
+    .login-wrapper {
+      position: relative;
+      z-index: 3;
+
+      min-width: 340px;
+      background: #eaffea;
+      padding: 36px 38px 30px 38px;
+      border-radius: 18px;
+      box-shadow: 0 8px 40px 4px rgba(30,130,30,0.23);
+      max-width: 90vw;
+      border: 2px solid #139c36;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .logo-box {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .logo-box img {
+      max-width: 100%;
+      max-height: 100%;
+    }
+    h1 {
+      text-align: center;
+      color: #14b134;
+      font-size: 2em;
+      margin-bottom: 8px;
+      letter-spacing: 1.2px;
+      font-weight: bold;
+      background: -webkit-linear-gradient(45deg, #13d77b, #188526 80%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 26px;
+      width: 100%;
+    }
+    .tab-btn {
+      background: none;
+      border: none;
+      font-size: 1.1em;
+      margin: 0 30px;
+      padding: 8px 0;
+      cursor: pointer;
+      color: #387c41;
+      border-bottom: 2.5px solid transparent;
+      transition: color 0.3s, border-color 0.3s;
+      font-weight: 600;
+      width: 50%;
+    }
+    .tab-btn.active {
+      color: #fff;
+      background: #16b83b;
+      border-radius: 4px 4px 0 0;
+      border-color: #13a342;
+    }
+    form {
+      display: none;
+      flex-direction: column;
+      gap: 14px;
+      width: 100%;
+      animation: fadein 0.5s;
+    }
+    form.active {
+      display: flex;
+    }
+    @keyframes fadein {
+      from { opacity: 0; transform: translateY(28px);}
+      to { opacity:1; transform: translateY(0);}
+    }
+    label {
+      color: #26784d;
+      font-weight: 500;
+      margin-bottom: 1.5px;
+    }
+    input {
+      padding: 11px;
+      border: 1.5px solid #91e09c;
+      border-radius: 7px;
+      font-size: 1em;
+      background: #fff;
+      color: #184B23;
+    }
+    input:focus {
+      outline: 2px solid #16b83b6b;
+    }
+    button[type="submit"] {
+      background: linear-gradient(90deg,#16b83b,#83f1b0 80%);
+      color: #fff;
+      font-weight: bold;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 1.09em;
+      cursor: pointer;
+      margin-top: 7px;
+      box-shadow: 0 2px 7px #168d2bb7;
+      transition: background 0.2s, color 0.2s;
+    }
+    button[type="submit"]:hover {
+      background: linear-gradient(90deg,#13d77b,#189944 85%);
+      color: #eaffea;
+    }
+    .form-footer {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 0.97em;
+      color: #2a924d;
+    }
+    .form-footer .link-btn {
+      background: none;
+      border: none;
+      color: #16b83b;
+      cursor: pointer;
+      text-decoration: underline;
+      margin-left: 6px;
+      font-weight: 500;
+      font-size: 1em;
+    }
+    
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #168a45;
+      padding: 0 32px;
+      height: 76px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      z-index: 100;
+      flex-shrink: 0; 
+    }
+    .logo-title {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    @keyframes logoPulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+      100% { transform: scale(1); }
+    }
+    .logo-title img {
+      height: 44px;
+      width: 44px;
+      object-fit: contain;
+      animation: logoPulse 4s infinite ease-in-out;
+    }
+    .logo-title .title {
+      font-size: 1.6em;
+      color: #fff;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+    .nav-btns {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .nav-btn {
+      background: none;
+      border: none;
+      padding: 9px 22px;
+      font-size: 1em;
+      font-weight: 500;
+      cursor: pointer;
+      color: #fff;
+      transition: background 0.2s, color 0.2s;
+      border-radius: 20px;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .nav-btn:hover, .nav-btn:focus {
+      background: rgba(255, 255, 255, 0.15);
+    }
+    .auth-button {
+      border-radius: 20px;
+      padding: 9px 22px;
+      font-size: 1em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+      border: 2px solid;
+      text-decoration: none;
+    }
+    .login-btn {
+      background: transparent;
+      color: #fff;
+      border-color: #fff;
+    }
+    .login-btn:hover, .login-btn:focus {
+      background: #fff;
+      color: #168a45;
+      border-color: #fff;
+    }
+    .logout-btn {
+      background: #fff;
+      color: #168a45;
+      border-color: #fff;
+    }
+    .logout-btn:hover {
+      background: #eaffea;
+      color: #11642f;
+      border-color: #eaffea;
+    }
+    .auth-wrapper {
+      display: flex;
+      gap: 10px;
+    }
+    .dashboard-btn {
+      background: #fff;
+      color: #168a45;
+      border-color: #fff;
+    }
+    .dashboard-btn:hover {
+      background: #eaffea;
+      color: #11642f;
+      border-color: #eaffea;
+    }
+
+    .flash-messages {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+    .flash-message {
+        padding: 12px;
+        border-radius: 7px;
+        font-weight: 500;
+        text-align: center;
+    }
+    .flash-message.error {
+        background: #ffe0e0;
+        color: #d8000c;
+        border: 1px solid #d8000c;
+    }
+    .flash-message.success {
+        background: #d4edda;
+        color: #155724;
+        border: 1px solid #155724;
+    }
+
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="logo-title">
+      <img src="{{ url_for('static', filename='Logo.jpg') }}" alt="Eco Rewards Logo">
+      <span class="title">Eco Rewards</span>
+    </div>
+    <nav class="nav-btns">
+      <a href="{{ url_for('home') }}" class="nav-btn">Home</a>
+      <button class="nav-btn">Services</button>
+      <button class="nav-btn">Shop</button>
+      <button class="nav-btn">Bin Locations</button>
+      <a href="{{ url_for('home') }}#contact-section" class="nav-btn">Contact Us</a>
+    </nav>
+    
+    <div class="auth-wrapper">
+      {% if 'user_id' in session %}
+        <a href="{{ url_for('dashboard') }}" class="auth-button dashboard-btn">Dashboard</a>
+        <a href="{{ url_for('logout') }}" class="auth-button logout-btn">Logout</a>
+      {% else %}
+        <a href="{{ url_for('login') }}" class="auth-button login-btn">Login</a>
+      {% endif %}
+    </div>
+  </header>
+  
+  <main class="login-main-area">
+    
+    <div class="bg"></div>
+    <div class="overlay"></div>
+    
+    <div class="login-wrapper">
+      <div class="logo-box">
+        <img src="{{ url_for('static', filename='Logo.jpg') }}" alt="Eco Rewards Logo">
+      </div>
+      <h1>Eco Rewards</h1>
+      
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <div class="flash-messages">
+            {% for category, message in messages %}
+              <div class="flash-message {{ category }}">{{ message }}</div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
+      
+      <div class="tabs">
+        <button class="tab-btn {% if active_tab == 'signin' %}active{% endif %}" id="signinTabBtn">Sign In</button>
+        <button class="tab-btn {% if active_tab == 'signup' %}active{% endif %}" id="signupTabBtn">Sign Up</button>
+      </div>
+
+      <form id="signinForm" class="{% if active_tab == 'signin' %}active{% endif %}" method="POST">
+        <input type="hidden" name="form_type" value="login">
+        
+        <label for="signin-credential">Email or Phone Number</label>
+        <input type="text" id="signin-credential" name="credential" required placeholder="Enter your email or phone">
+        
+        <label for="signin-password">Password</label>
+        <input type="password" id="signin-password" name="password" required placeholder="Enter password">
+        
+        <button type="submit">Sign In</button>
+        <div class="form-footer">
+          New user?
+          <button class="link-btn" type="button" onclick="showSignup()">Sign Up</button>
+        </div>
+      </form>
+
+      <form id="signupForm" class="{% if active_tab == 'signup' %}active{% endif %}" method="POST">
+        <input type="hidden" name="form_type" value="signup">
+        
+        <label for="signup-name">Name</label>
+        <input type="text" id="signup-name" name="name" required placeholder="Enter your name">
+        
+        <label for="signup-email">Email</label>
+        <input 
+          type="email" 
+          id="signup-email" 
+          name="email"
+          required 
+          placeholder="Enter your email"
+          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+          title="Please enter a valid email address (e.g., user@example.com)"
+        >
+        
+        <label for="signup-phone">Phone Number</label>
+        <input 
+          type="tel" 
+          id="signup-phone" 
+          name="phone"
+          required 
+          placeholder="Enter your 10-digit phone number"
+          pattern="[0-9]{10}"
+          title="Please enter exactly 10 digits (e.g., 9876543210)"
+        >
+        
+        <label for="signup-password">Password</label>
+        <input type="password" id="signup-password" name="password" required placeholder="Create password">
+        
+        <label for="signup-confirm">Verify Password</label>
+        <input type="password" id="signup-confirm" name="confirm_password" required placeholder="Re-enter password">
+        
+        <button type="submit">Sign Up</button>
+        <div class="form-footer">
+          Already have an account?
+          <button class="link-btn" type="button" onclick="showSignin()">Sign In</button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <script>
+    function showSignin() {
+      document.getElementById('signinTabBtn').classList.add('active');
+      document.getElementById('signupTabBtn').classList.remove('active');
+      document.getElementById('signinForm').classList.add('active');
+      document.getElementById('signupForm').classList.remove('active');
+    }
+    
+    function showSignup() {
+      document.getElementById('signinTabBtn').classList.remove('active');
+      document.getElementById('signupTabBtn').classList.add('active');
+      document.getElementById('signinForm').classList.remove('active');
+      document.getElementById('signupForm').classList.add('active');
+    }
+    
+    
+    document.addEventListener("DOMContentLoaded", function() {
+      
+      const signinTab = document.getElementById('signinTabBtn');
+      const signupTab = document.getElementById('signupTabBtn');
+      
+      if (signinTab) signinTab.onclick = showSignin;
+      if (signupTab) signupTab.onclick = showSignup;
+      
+    }); 
+  </script>
+</body>
+</html>
